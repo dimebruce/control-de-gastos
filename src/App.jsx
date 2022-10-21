@@ -12,10 +12,26 @@ function App() {
   // Verificando si es valido, para mostrar el otro componente
   const [isValidPresupuesto, setIsValidPresupuesto] = useState(false)
   // State para guardar Gasto
+  // So en localStorage existe gastos, entonces traemos el Json, de lo contrario iniciamos con un array vacio
   const [gastos, setGastos] = useState( localStorage.getItem('gastos') ? JSON.parse(localStorage.getItem('gastos')) : [])
 
   // Const para el editar el gasto en el modal
   const [gastoEditar, setGastoEditar] = useState({})
+
+  // Filtro 
+  const [filtro, setFiltro] = useState('')
+  // Mostrar los gastos filtrados / Pintar
+  const [gastosFiltrados, setGastosFiltrados] = useState([])
+
+  // Hook en espera del cambio de filtro
+  useEffect(() => {
+    if(filtro){
+      // Filtrar gastos por categoria
+      const gastosFiltrados = gastos.filter( gasto => gasto.categoria === filtro)
+      setGastosFiltrados(gastosFiltrados);
+    }
+  }, [filtro])
+  
 
   // LocalStorage presupuesto
   useEffect(() => {
@@ -70,10 +86,14 @@ function App() {
         guardarGasto={guardarGasto}
         // se manda gastos para poder iterar y crear la lista en el DOM
         gastos={gastos}
+        setGastos={setGastos}
         // Mandando el state de gastoEditar
         gastoEditar={gastoEditar}
         setGastoEditar={setGastoEditar}
         eliminarGasto={eliminarGasto}
+        filtro={filtro}
+        setFiltro={setFiltro}
+        gastosFiltrados={gastosFiltrados}
         />
 
     </div>

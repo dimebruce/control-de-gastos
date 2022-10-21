@@ -7,7 +7,7 @@ import "react-circular-progressbar/dist/styles.css";
 
 import { formatoMoneda } from "../helpers";
 
-const PanelPresupuesto = ({ gastos, presupuesto }) => {
+const PanelPresupuesto = ({ gastos, setGastos, presupuesto, setPresupuesto, setIsValidPresupuesto }) => {
   const [procentaje, setPorcentaje] = useState(0)
   const [disponible, setDisponible] = useState(0);
   const [gastado, setGastado] = useState(0);
@@ -34,6 +34,15 @@ const PanelPresupuesto = ({ gastos, presupuesto }) => {
     setPorcentaje(nuevoPorcentaje)
 }, [gastos]);
 
+  const handleResetApp = () => {
+    const confirmacion = confirm("¿Deseas borrar todos los valores?")
+    if (confirmacion) {
+      setGastos([])
+      setPresupuesto(0)
+      setIsValidPresupuesto(false)
+    }
+  }
+
   return (
     <div>
       <div className="container text-center text-black mb-3">
@@ -46,23 +55,29 @@ const PanelPresupuesto = ({ gastos, presupuesto }) => {
                         text={`${Math.round(procentaje)}%`}
                         circleRatio={0.75}
                         styles={buildStyles({
+                          textColor: procentaje > 100 ? '#DC2626' : '#0d6efd',
                           rotation: 1 / 2 + 1 / 8,
                           strokeLinecap: "butt",
-                          pathColor: '#0d6efd',
+                          pathColor: procentaje > 100 ? '#DC2626' : '#0d6efd',
                           trailColor: "#eee"
                         })}
                     />
                 </div>
                 
                 <div className="col-md-6">
-                    <button className="btn btn-danger btn-block w-100 mb-3">
+                    <button 
+                      className="btn btn-danger btn-block w-100 mb-3"
+                      type="button"
+                      onClick={handleResetApp}
+                    >
                         Resetear app
                     </button>
                     <p className="text-lg-start text-md-center">
                         <span className="fw-bold">Presupuesto: </span>{" "}
                         {formatoMoneda(presupuesto)}
                     </p>
-                    <p className="text-lg-start text-md-center">
+                    {/* Condicional por si el user se pasa de su presupueto, lo dispobible se ponga en rojo */}
+                    <p className={`${disponible < 0 ? 'text-lg-start text-md-center text-danger' : 'text-lg-start text-md-center'}`}>
                         <span className="fw-bold">Disponible: </span>{" "}
                         {formatoMoneda(disponible)}
                     </p>
