@@ -52,14 +52,15 @@ const PanelPresupuesto = ({ gastos, setGastos, presupuesto, setPresupuesto, setI
                     {/* <img src="https://indiehoy.com/wp-content/uploads/2020/07/rick-morty-600x900.jpg" className="rounded mx-auto d-block" width={250} alt="..."/> */}
                     <CircularProgressbar 
                         value={procentaje}
-                        text={`${Math.round(procentaje)}%`}
+                        text={`${Math.round(procentaje)}% gastado`}
                         circleRatio={0.75}
                         styles={buildStyles({
                           textColor: procentaje > 100 ? '#DC2626' : '#0d6efd',
                           rotation: 1 / 2 + 1 / 8,
                           strokeLinecap: "butt",
                           pathColor: procentaje > 100 ? '#DC2626' : '#0d6efd',
-                          trailColor: "#eee"
+                          trailColor: "#eee",
+                          textSize: "11px"
                         })}
                     />
                 </div>
