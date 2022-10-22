@@ -150,7 +150,7 @@ const Gasto = ({ gasto, setGastoEditar,eliminarGasto }) => {
             <h1>{formatoMoneda(cantidad)}</h1>
           </div>
         </div>
-        <div className="col-md-1">
+        <div className="d-flex flex-wrap col-md-1">
           <div className="card-body">
             <h2 onClick={btnEditar} data-bs-toggle="modal" data-bs-target="#agregaGasto" className="text-primary">
               <i className="bi bi-pencil"></i>
